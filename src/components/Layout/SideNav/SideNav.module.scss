@@ -1,0 +1,53 @@
+@import '../../../scss/abstracts/variables';
+
+.sidenav {
+  width: 11.7rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16.4rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: $black;
+  color: #ffffff;
+  z-index: -1;
+  padding-bottom: 5.8vw;
+  &__nav {
+    height: 31.6rem;
+    width: 100%;
+    position: relative;
+  }
+  &__nav-list {
+    all: unset;
+    list-style-type: none;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+  &__nav-listitem {
+    cursor: pointer;
+    width: 6.4rem;
+    height: 6.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 0.6rem;
+  }
+  &__nav-listimg {
+    height: 32px;
+  }
+  &__content {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

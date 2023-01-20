@@ -1,0 +1,39 @@
+@import '../../../scss/abstracts/variables';
+
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $black;
+  color: #ffffff;
+  height: 9.1rem;
+  padding: 0 8.7rem 0 2.9rem;
+  font-size: 2.4rem;
+  font-weight: 500;
+  &__title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.05rem;
+    color: $red;
+    cursor: pointer;
+  }
+  &__logo {
+    height: 57.7px;
+  }
+  &__nav {
+    width: 80%;
+  }
+  &__nav-list {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+  }
+  &__nav-listitem {
+    cursor: pointer;
+  }
+}
