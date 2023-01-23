@@ -1,4 +1,12 @@
 .main {
-  position: relative;
+  position: absolute;
   height: calc(100vh - 9.1rem);
+  min-height: calc(780px - 9.1rem);
+  width: 100%;
+  &__content {
+    position: absolute;
+    left: 11.7rem;
+    padding: 6.8rem 9rem 6.8rem 10.9rem;
+    width: calc(100% - 11.7rem);
+  }
 }

@@ -9,7 +9,7 @@ const Layout = props => {
       <Header />
       <main className={styles.main}>
         <SideNav />
-        {props.children}
+        <div className={styles['main__content']}>{props.children}</div>
       </main>
     </React.Fragment>
   );

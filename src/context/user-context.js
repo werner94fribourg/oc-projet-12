@@ -3,6 +3,9 @@ import { USER_URL } from '../helpers/globals';
 
 export const UserContext = React.createContext({
   user: { activity: {}, averageSessions: {}, performance: {} },
+  activity: {},
+  averageSessions: {},
+  performance: {},
   getUser: id => {},
   getActivity: id => {},
   getAverageSessions: id => {},
@@ -17,26 +20,14 @@ const fetchAndTransformData = async url => {
   return data;
 };
 
-const parrallelFetchAndTransformData = async (url1, url2) => {
-  return await Promise.all([
-    fetchAndTransformData(url1),
-    fetchAndTransformData(url2),
-  ]);
-};
-
 const UserContextProvider = props => {
-  const [user, setUser] = useState({
-    activity: {},
-    averageSessions: {},
-    performance: {},
-  });
+  const [user, setUser] = useState({});
+  const [activity, setActivity] = useState({});
+  const [averageSessions, setAverageSessions] = useState({});
+  const [performance, setPerformance] = useState({});
 
-  const { id: userId } = user;
-
-  const getUser = useCallback(
-    async id => {
-      if (userId === id) return;
-
+  const getUser = useCallback(async id => {
+    try {
       const userData = await fetchAndTransformData(USER_URL + id);
 
       setUser(user => {
@@ -45,114 +36,77 @@ const UserContextProvider = props => {
           ...userData,
         };
       });
-    },
-    [userId]
-  );
+    } catch (err) {
+      setUser({});
+    }
+  }, []);
 
-  const getActivity = useCallback(
-    async id => {
+  const getActivity = useCallback(async id => {
+    try {
       const userURL = USER_URL + id;
       const activityUrl = userURL + '/activity';
 
-      if (userId !== id) {
-        const [userData, activityData] = await parrallelFetchAndTransformData(
-          userURL,
-          activityUrl
-        );
-
-        setUser(user => {
-          return {
-            ...user,
-            ...userData,
-            activity: { ...activityData },
-            averageSessions: {},
-            performance: {},
-          };
-        });
-        return;
-      }
-
       const activityData = await fetchAndTransformData(activityUrl);
 
-      setUser(user => {
+      setActivity(activity => {
         return {
-          ...user,
-          activity: { ...activityData },
+          ...activity,
+          ...activityData,
         };
       });
-    },
-    [userId]
-  );
+    } catch (err) {
+      setActivity({});
+    }
+  }, []);
 
-  const getAverageSessions = useCallback(
-    async id => {
+  const getAverageSessions = useCallback(async id => {
+    try {
       const userURL = USER_URL + id;
       const averageSessionsUrl = userURL + '/average-sessions';
 
-      if (userId !== id) {
-        const [userData, averageSessionsData] =
-          await parrallelFetchAndTransformData(userURL, averageSessionsUrl);
-
-        setUser(user => {
-          return {
-            ...user,
-            ...userData,
-            activity: {},
-            averageSessions: { ...averageSessionsData },
-            performance: {},
-          };
-        });
-        return;
-      }
-
       const averageSessionsData = fetchAndTransformData(averageSessionsUrl);
 
-      setUser(user => {
+      setAverageSessions(averageSessions => {
         return {
-          ...user,
-          averageSessions: { ...averageSessionsData },
+          ...averageSessions,
+          ...averageSessionsData,
         };
       });
-    },
-    [userId]
-  );
+    } catch (err) {
+      setAverageSessions({});
+    }
+  }, []);
 
-  const getPerformance = useCallback(
-    async id => {
+  const getPerformance = useCallback(async id => {
+    try {
       const userURL = USER_URL + id;
-      const averageSessionsUrl = userURL + '/performance';
+      const performanceUrl = userURL + '/performance';
 
-      if (userId !== id) {
-        const [userData, performanceData] =
-          await parrallelFetchAndTransformData(userURL, averageSessionsUrl);
+      const performanceData = fetchAndTransformData(performanceUrl);
 
-        setUser(user => {
-          return {
-            ...user,
-            ...userData,
-            activity: {},
-            averageSessions: {},
-            performance: { ...performanceData },
-          };
-        });
-        return;
-      }
-
-      const performanceData = fetchAndTransformData(averageSessionsUrl);
-
-      setUser(user => {
+      setPerformance(performance => {
         return {
-          ...user,
-          performance: { ...performanceData },
+          ...performance,
+          ...performanceData,
         };
       });
-    },
-    [userId]
-  );
+    } catch (err) {
+      setPerformance({});
+    }
+  }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, getUser, getActivity, getAverageSessions, getPerformance }}
+      value={{
+        user,
+        activity,
+        averageSessions,
+        performance,
+        getUser,
+        getActivity,
+        getAverageSessions,
+        getPerformance,
+      }}
     >
       {props.children}
     </UserContext.Provider>

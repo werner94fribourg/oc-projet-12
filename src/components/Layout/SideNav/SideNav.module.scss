@@ -13,11 +13,12 @@
   background-color: $black;
   color: #ffffff;
   z-index: -1;
-  padding-bottom: 5.8vw;
   &__nav {
     height: 31.6rem;
     width: 100%;
-    position: relative;
+    position: absolute;
+    top: calc(50% - 9.1rem);
+    transform: translateY(-50%);
   }
   &__nav-list {
     all: unset;
@@ -49,5 +50,7 @@
     transform: rotate(180deg);
     font-size: 12px;
     font-weight: 500;
+    position: absolute;
+    bottom: 5.76%;
   }
 }
