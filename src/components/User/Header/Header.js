@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Title.module.scss';
+import styles from './Header.module.scss';
 
-const Title = props => {
+const Header = props => {
   const { firstName } = props;
   return (
     <React.Fragment>
@@ -15,4 +15,4 @@ const Title = props => {
   );
 };
 
-export default Title;
+export default Header;

@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
-import Title from '../components/User/Title/Title';
+import Header from '../components/User/Header/Header';
+import Activity from '../components/User/UserLayout/Activity/Activity';
+import UserLayout from '../components/User/UserLayout/UserLayout';
 import { UserContext } from '../context/user-context';
 
 const User = () => {
@@ -11,12 +13,13 @@ const User = () => {
     getUser(id);
   }, [id, getUser]);
 
-  console.log(user);
-
   const { userInfos } = user;
   return (
     <React.Fragment>
-      <Title firstName={userInfos?.firstName} />
+      <Header firstName={userInfos?.firstName} />
+      <UserLayout>
+        <Activity />
+      </UserLayout>
     </React.Fragment>
   );
 };

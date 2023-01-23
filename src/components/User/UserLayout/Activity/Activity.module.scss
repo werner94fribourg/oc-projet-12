@@ -1,0 +1,67 @@
+@import '../../../../scss/abstracts/variables';
+
+.activity {
+  &__chart {
+    background-color: #fbfbfb;
+    position: relative;
+    border-radius: 0.5rem;
+  }
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 2.4rem 3.2rem;
+  }
+  &__title {
+    font-size: 1.5rem;
+    line-height: 2.4rem;
+    color: #20253a;
+  }
+  &__categories {
+    font-size: 1.4rem;
+    color: #74798c;
+    display: flex;
+    align-items: center;
+    gap: 3.2rem;
+  }
+  &__category {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  &__weight {
+    .dot {
+      background-color: #282d30;
+    }
+  }
+  &__calories {
+    display: flex;
+    align-items: center;
+    .dot {
+      background-color: $red;
+    }
+  }
+}
+
+.dot {
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tooltip {
+  background-color: $red;
+  color: #ffffff;
+  font-size: 0.7rem;
+  line-height: 2.4rem;
+  width: 3.9rem;
+  height: 6.3rem;
+  padding: 0.4rem 1.2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  border-radius: 0.5rem;
+}
