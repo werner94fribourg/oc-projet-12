@@ -64,8 +64,9 @@ const UserContextProvider = props => {
       const userURL = USER_URL + id;
       const averageSessionsUrl = userURL + '/average-sessions';
 
-      const averageSessionsData = fetchAndTransformData(averageSessionsUrl);
-
+      const averageSessionsData = await fetchAndTransformData(
+        averageSessionsUrl
+      );
       setAverageSessions(averageSessions => {
         return {
           ...averageSessions,
@@ -82,7 +83,7 @@ const UserContextProvider = props => {
       const userURL = USER_URL + id;
       const performanceUrl = userURL + '/performance';
 
-      const performanceData = fetchAndTransformData(performanceUrl);
+      const performanceData = await fetchAndTransformData(performanceUrl);
 
       setPerformance(performance => {
         return {

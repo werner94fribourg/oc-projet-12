@@ -41,6 +41,36 @@ const Activity = () => {
     );
   };
 
+  const CustomXAxisTick = ({ x, y }) => {
+    const prevCount = count++;
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          y={16}
+          style={{ fontSize: 14, fontWeight: 500 }}
+          textAnchor="start"
+          fill="#9b9eac"
+        >
+          {`${(prevCount % activity.sessions?.length) + 1}`}
+        </text>
+      </g>
+    );
+  };
+  const CustomYAxisTick = ({ x, y, payload }) => {
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={45}
+          style={{ fontSize: 14, fontWeight: 500 }}
+          textAnchor="start"
+          fill="#9b9eac"
+        >
+          {payload.value}
+        </text>
+      </g>
+    );
+  };
+
   return (
     <div className={styles['activity__chart']}>
       <div className={styles['activity__header']}>
@@ -59,7 +89,7 @@ const Activity = () => {
           </span>
         </div>
       </div>
-      <ResponsiveContainer width="100%" aspect={2.6}>
+      <ResponsiveContainer width="100%" aspect={4.0}>
         <BarChart
           width={835}
           height={207.5}
@@ -97,25 +127,21 @@ const Activity = () => {
           />
           <XAxis
             dataKey="day"
-            tick={{ fontSize: 14, color: '9b9eac', fontWeight: 500 }}
             dy={16}
             tickLine={false}
-            tickFormatter={() => {
-              const prevCount = count++;
-              return `${(prevCount % activity.sessions?.length) + 1}`;
-            }}
+            tick={<CustomXAxisTick />}
           />
           <YAxis
             orientation="right"
-            tick={{ fontSize: 14, color: '9b9eac', fontWeight: 500 }}
             dx={45}
             axisLine={false}
             tickLine={false}
+            tick={<CustomYAxisTick />}
           />
           <Tooltip
             cursor={{ fill: '#c4c4c4', opacity: 0.5 }}
             content={<CustomTooltip />}
-            position={{ x: posX + 100 }}
+            position={{ x: posX + 40 }}
           />
           <Bar
             name="Poids (kg)"
