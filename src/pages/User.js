@@ -4,9 +4,10 @@ import Header from '../components/User/Header/Header';
 import Activity from '../components/User/UserLeftLayout/Activity/Activity';
 import UserLeftSecondRow from '../components/User/UserLeftLayout/UserLeftSecondRow/UserLeftSecondRow';
 import Sessions from '../components/User/UserLeftLayout/UserLeftSecondRow/Sessions/Sessions';
-import Performance from '../components/User/UserLeftLayout/Activity/Performance/Performance';
+import Performance from '../components/User/UserLeftLayout/UserLeftSecondRow/Performance/Performance';
 import UserLeftLayout from '../components/User/UserLeftLayout/UserLeftLayout';
 import { UserContext } from '../context/user-context';
+import Score from '../components/User/UserLeftLayout/UserLeftSecondRow/Score/Score';
 
 const User = () => {
   const { user, getUser } = useContext(UserContext);
@@ -25,6 +26,7 @@ const User = () => {
         <UserLeftSecondRow>
           <Sessions />
           <Performance />
+          <Score score={user.todayScore || 0} />
         </UserLeftSecondRow>
       </UserLeftLayout>
     </React.Fragment>

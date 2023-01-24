@@ -58,8 +58,8 @@ const Performance = () => {
     return (
       <g transform={`translate(${x},${y})`}>
         <text
-          x={titlePositions[payload.value].x}
-          y={5 + titlePositions[payload.value].y}
+          x={titlePositions[payload.value]?.x || 0}
+          y={5 + titlePositions[payload.value]?.y || 0}
           style={{ fontSize: 12, fontWeight: 500 }}
           textAnchor="start"
           fill="#ffffff"
