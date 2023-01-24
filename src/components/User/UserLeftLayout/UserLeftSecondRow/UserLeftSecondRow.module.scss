@@ -1,5 +1,6 @@
 .layout {
-  display: block;
-  height: 26.3rem;
+  display: flex;
+  flex-flow: row nowrap;
   padding: 3rem 0;
+  gap: 3rem;
 }

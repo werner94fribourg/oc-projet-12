@@ -58,7 +58,7 @@ const Sessions = () => {
         className={styles['sessions__background']}
         style={{ width: `${((238 - posX) / 238) * 93}%` }}
       ></div>
-      <div>
+      <div className={styles['sessions__plot']}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             width={258}
