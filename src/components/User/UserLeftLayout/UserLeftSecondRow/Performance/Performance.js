@@ -29,12 +29,12 @@ const Performance = () => {
   };
 
   const titlePositions = {
-    Cardio: { x: -17, y: -2 },
-    Intensité: { x: -30, y: -10 },
-    Vitesse: { x: -30, y: 10 },
-    Force: { x: -15, y: 2 },
-    Endurance: { x: -22, y: 10 },
-    Energie: { x: -7, y: -10 },
+    Cardio: { x: -17, y: -2, rotation: 0 },
+    Intensité: { x: -25, y: -2, rotation: -60 },
+    Vitesse: { x: -24, y: 2, rotation: 60 },
+    Force: { x: -15, y: 2, rotation: 0 },
+    Endurance: { x: -27, y: 2, rotation: -60 },
+    Energie: { x: -18, y: -2, rotation: 60 },
   };
 
   let performanceData = [
@@ -55,6 +55,7 @@ const Performance = () => {
       });
 
   const CustomAxisTick = ({ x, y, payload }) => {
+    const rotation = `rotate(${titlePositions[payload.value]?.rotation || 0})`;
     return (
       <g transform={`translate(${x},${y})`}>
         <text
@@ -63,6 +64,7 @@ const Performance = () => {
           style={{ fontSize: 12, fontWeight: 500 }}
           textAnchor="start"
           fill="#ffffff"
+          transform={rotation}
         >
           {payload.value}
         </text>

@@ -31,8 +31,6 @@ const User = () => {
       };
     });
 
-  console.log(displayKeyData);
-
   return (
     <React.Fragment>
       <Header firstName={userInfos?.firstName} />

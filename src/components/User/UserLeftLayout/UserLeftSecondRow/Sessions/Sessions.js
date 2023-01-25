@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { UserContext } from '../../../../../context/user-context';
 import {
@@ -15,11 +15,12 @@ const Sessions = () => {
   const { id } = useParams();
   const { averageSessions, getAverageSessions } = useContext(UserContext);
 
-  const [posX, setPosX] = useState(244);
+  const [posX, setPosX] = useState(0);
   useEffect(() => {
     getAverageSessions(id);
   }, [id, getAverageSessions]);
 
+  const sessionContainer = useRef(null);
   const CustomTooltip = ({ active, payload }) => {
     if (!(active && payload && payload.length)) return null;
 
@@ -30,6 +31,12 @@ const Sessions = () => {
     ] = payload;
 
     return <div className={styles.tooltip}>{sessionLength} min</div>;
+  };
+
+  const calcOffset = posX => {
+    const rect = sessionContainer.current.getBoundingClientRect();
+
+    return (rect.left + rect.width - posX) / rect.width;
   };
 
   const CustomAxisTick = ({ x, y, payload }) => {
@@ -48,7 +55,27 @@ const Sessions = () => {
   };
 
   return (
-    <div className={styles.sessions}>
+    <div
+      className={styles.sessions}
+      ref={sessionContainer}
+      onMouseEnter={event => {
+        if (!event) {
+          setPosX(0);
+          return;
+        }
+        setPosX(calcOffset(event.clientX));
+      }}
+      onMouseMove={event => {
+        if (!event) {
+          setPosX(0);
+          return;
+        }
+        setPosX(calcOffset(event.clientX));
+      }}
+      onMouseLeave={() => {
+        setPosX(0);
+      }}
+    >
       <div className={styles['sessions__header']}>
         <h2 className={styles['sessions__title']}>
           Durée moyenne des sessions
@@ -56,7 +83,7 @@ const Sessions = () => {
       </div>
       <div
         className={styles['sessions__background']}
-        style={{ width: `${((238 - posX) / 238) * 93}%` }}
+        style={{ width: `${posX * 100}%` }}
       ></div>
       <div className={styles['sessions__plot']}>
         <ResponsiveContainer width="100%" height="100%">
@@ -69,23 +96,6 @@ const Sessions = () => {
               right: 20,
               left: -55,
               bottom: 10,
-            }}
-            onMouseEnter={event => {
-              if (!event) {
-                setPosX(238);
-                return;
-              }
-              setPosX(event.chartX);
-            }}
-            onMouseMove={event => {
-              if (!event) {
-                setPosX(238);
-                return;
-              }
-              setPosX(event.chartX);
-            }}
-            onMouseLeave={() => {
-              setPosX(238);
             }}
           >
             <XAxis
