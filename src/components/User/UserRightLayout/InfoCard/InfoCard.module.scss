@@ -1,0 +1,36 @@
+.card {
+  width: 17.8vw;
+  max-width: 25.8rem;
+  height: 8.6vw;
+  max-height: 12.4rem;
+  border-radius: 0.5rem;
+  background: #fbfbfb;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: min(2.4rem, 1.7vw);
+  padding: min(3.2rem, 2.2vw);
+  &__text {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+  }
+  &__info {
+    color: #282d30;
+    font-size: min(2rem, 1.4vw);
+    font-weight: 700;
+    line-height: min(2.4rem, 1.7vw);
+  }
+  &__cat {
+    color: #74798c;
+    font-size: min(1.4rem, 1vw);
+    line-height: min(2.4rem, 1.7vw);
+    font-weight: 500;
+  }
+  &__img {
+    width: 4.2vw;
+    height: 4.2vw;
+    max-width: 6rem;
+    max-height: 6rem;
+  }
+}

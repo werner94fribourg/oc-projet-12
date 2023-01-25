@@ -1,10 +1,13 @@
 .score {
   position: relative;
-  width: 25.8rem;
-  height: 26.3rem;
+  width: 15vw;
+  height: 15vw;
+  max-width: 25.8rem;
+  max-height: 25.8rem;
   background: #fbfbfb;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.0212249);
   border-radius: 0.5rem;
+  overflow: hidden;
   &__chart {
     height: 100%;
     transform: scale(2.1) rotate3d(0, 1, 0, 180deg) rotate(45deg);

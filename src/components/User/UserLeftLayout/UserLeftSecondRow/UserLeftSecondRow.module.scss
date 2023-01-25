@@ -1,7 +1,6 @@
 .layout {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
-  padding: 3rem 0;
-  gap: 3rem;
+  padding-top: 3rem;
 }

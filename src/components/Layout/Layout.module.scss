@@ -1,12 +1,15 @@
 .main {
   position: absolute;
   height: calc(100vh - 9.1rem);
-  min-height: calc(780px - 9.1rem);
   width: 100%;
+  overflow: hidden;
   &__content {
     position: absolute;
+    top: 0;
+    bottom: 0;
     left: 11.7rem;
-    padding: 6.8rem 9rem 6.8rem 10.9rem;
+    padding: 2rem 9rem 0 10.9rem;
     width: calc(100% - 11.7rem);
+    overflow-y: auto;
   }
 }
