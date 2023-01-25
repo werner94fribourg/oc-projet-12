@@ -11,6 +11,17 @@ import {
 } from 'recharts';
 import styles from './Sessions.module.scss';
 
+/**
+ * Component rendering the sessions line chart in the application.
+ *
+ * @component
+ * @example
+ * const App = () => {
+ *   return (
+ *     <Activity />
+ *    );
+ * };
+ */
 const Sessions = () => {
   const { id } = useParams();
   const { averageSessions, getAverageSessions } = useContext(UserContext);
@@ -26,11 +37,11 @@ const Sessions = () => {
 
     const [
       {
-        payload: { sessionLength },
+        payload: { session },
       },
     ] = payload;
 
-    return <div className={styles.tooltip}>{sessionLength} min</div>;
+    return <div className={styles.tooltip}>{session} min</div>;
   };
 
   const calcOffset = posX => {
@@ -90,7 +101,7 @@ const Sessions = () => {
           <LineChart
             width={258}
             height={263}
-            data={averageSessions.sessions}
+            data={averageSessions}
             margin={{
               top: 6,
               right: 20,
@@ -112,7 +123,7 @@ const Sessions = () => {
             />
             <Line
               type="monotone"
-              dataKey="sessionLength"
+              dataKey="length"
               stroke="rgba(255, 255, 255, 0.504)"
               dot={false}
             />

@@ -1,43 +1,156 @@
-import React, { useCallback, useState } from 'react';
+/**
+ * Store the User global context and a Provider to make it accessible for other components.
+ * @module user-context
+ */
+// eslint-disable-next-line
+import React, { useCallback, Context, useState } from 'react';
+import calories from './calories-icon.svg';
 import { USER_URL } from '../helpers/globals';
+import { fetchAndTransformData } from '../helpers/helpers';
+import PropTypes from 'prop-types';
+import formatter from '../formatter/UserFormatter';
 
-export const UserContext = React.createContext({
-  user: { activity: {}, averageSessions: {}, performance: {} },
-  activity: {},
-  averageSessions: {},
-  performance: {},
+/**
+ * Getter function, used to retrieve an element from the API from a specific user.
+ * @name Getter
+ * @function
+ * @param {string} id - id of the user we want to retrieve from the API
+ */
+
+/**
+ * User context object, that stores all the informations related to the requested user.
+ * @typedef UserContext
+ * @property {Object} user - the requested user
+ * @property {Object[]} activity - the requested user's activities
+ * @property {Object[]} averageSessions - the requested user's average sessions
+ * @property {Object[]} performance - the requested user's performance
+ * @property {Getter} getUser - a function used to get the user's general informations from the API
+ * @property {Getter} getActivity - a function used to get the user's activities from the API
+ * @property {Getter} getAverageSessions - a function used to get the user's sessions time from the API
+ * @property {Getter} getPerformance - a function used to get the user's performance from the API
+ */
+
+/**
+ * @type {UserContext}
+ */
+const defaultContext = {
+  user: {
+    name: '',
+    score: 0,
+    data: [
+      {
+        key: 'calorie',
+        info: 0,
+        cat: {
+          key: 'calorie',
+          name: 'Calories',
+          img: calories,
+          unit: 'kCal',
+        },
+      },
+    ],
+  },
+  activity: [{ day: 1, kilogram: 0, calories: 0 }],
+  averageSessions: [{ day: 1, length: 0 }],
+  performance: [
+    {
+      kind: 1,
+      english: 'cardio',
+      french: 'Cardio',
+      value: 80,
+      position: { x: 0, y: 0, rotation: 0 },
+    },
+  ],
   getUser: id => {},
   getActivity: id => {},
   getAverageSessions: id => {},
   getPerformance: id => {},
-});
-
-const fetchAndTransformData = async url => {
-  const response = await fetch(url, { mode: 'cors' });
-
-  const { data } = await response.json();
-
-  return data;
 };
 
+/**
+ * @type {Context<UserContext>}
+ */
+export const UserContext = React.createContext(defaultContext);
+
+/**
+ * @typedef {object} Props
+ * @prop {React.Component} children - the children components wrapped by the UserContextProvider
+ */
+
+/**
+ * Component used to make the user context object globally accessible to all the subcomponents wrapped by it.
+ *
+ * @param {Props} props - the [props]{@link Props} passed to the React Component
+ * @component
+ * @example
+ * const root = ReactDOM.createRoot(document.getElementById('root'));
+ * root.render(
+ * <UserContextProvider>
+ *   <App />
+ * </UserContextProvider>
+ * );
+ */
 const UserContextProvider = props => {
-  const [user, setUser] = useState({});
-  const [activity, setActivity] = useState({});
-  const [averageSessions, setAverageSessions] = useState({});
-  const [performance, setPerformance] = useState({});
+  const [user, setUser] = useState({
+    name: '',
+    score: 0,
+    data: [
+      {
+        key: 'calorie',
+        info: 0,
+        cat: {
+          key: 'calorie',
+          name: 'Calories',
+          img: calories,
+          unit: 'kCal',
+        },
+      },
+    ],
+  });
+  const [activity, setActivity] = useState([
+    { day: 1, kilogram: 0, calories: 0 },
+  ]);
+  const [averageSessions, setAverageSessions] = useState([
+    { day: 1, length: 30 },
+  ]);
+  const [performance, setPerformance] = useState([
+    {
+      kind: 1,
+      english: 'cardio',
+      french: 'Cardio',
+      value: 80,
+      position: { x: 0, y: 0, rotation: 0 },
+    },
+  ]);
 
   const getUser = useCallback(async id => {
     try {
       const userData = await fetchAndTransformData(USER_URL + id);
 
-      setUser(user => {
+      const formatted = formatter.formatUser(userData);
+
+      setUser(() => {
         return {
-          ...user,
-          ...userData,
+          ...formatted,
         };
       });
     } catch (err) {
-      setUser({});
+      setUser({
+        name: '',
+        score: 0,
+        data: [
+          {
+            key: 'calorie',
+            info: 0,
+            cat: {
+              key: 'calorie',
+              name: 'Calories',
+              img: calories,
+              unit: 'kCal',
+            },
+          },
+        ],
+      });
     }
   }, []);
 
@@ -48,14 +161,13 @@ const UserContextProvider = props => {
 
       const activityData = await fetchAndTransformData(activityUrl);
 
-      setActivity(activity => {
-        return {
-          ...activity,
-          ...activityData,
-        };
+      const formatted = formatter.formatActivity(activityData);
+
+      setActivity(() => {
+        return [...formatted];
       });
     } catch (err) {
-      setActivity({});
+      setActivity([{ day: 1, kilogram: 0, calories: 0 }]);
     }
   }, []);
 
@@ -67,14 +179,14 @@ const UserContextProvider = props => {
       const averageSessionsData = await fetchAndTransformData(
         averageSessionsUrl
       );
-      setAverageSessions(averageSessions => {
-        return {
-          ...averageSessions,
-          ...averageSessionsData,
-        };
+
+      const formatted = formatter.formatAverageSessions(averageSessionsData);
+
+      setAverageSessions(() => {
+        return [...formatted];
       });
     } catch (err) {
-      setAverageSessions({});
+      setAverageSessions([{ day: 1, length: 30 }]);
     }
   }, []);
 
@@ -85,14 +197,21 @@ const UserContextProvider = props => {
 
       const performanceData = await fetchAndTransformData(performanceUrl);
 
-      setPerformance(performance => {
-        return {
-          ...performance,
-          ...performanceData,
-        };
+      const formatted = formatter.formatPerformance(performanceData);
+
+      setPerformance(() => {
+        return [...formatted];
       });
     } catch (err) {
-      setPerformance({});
+      setPerformance([
+        {
+          kind: 1,
+          english: 'cardio',
+          french: 'Cardio',
+          value: 80,
+          position: { x: 0, y: 0, rotation: 0 },
+        },
+      ]);
     }
   }, []);
 
@@ -112,6 +231,16 @@ const UserContextProvider = props => {
       {props.children}
     </UserContext.Provider>
   );
+};
+
+UserContextProvider.propTypes = {
+  /**
+   * The children components wrapped by the UserContextProvider
+   */
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default UserContextProvider;

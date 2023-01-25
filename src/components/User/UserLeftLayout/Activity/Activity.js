@@ -12,6 +12,17 @@ import {
 } from 'recharts';
 import styles from './Activity.module.scss';
 
+/**
+ * Component rendering the activity bar chart in the application.
+ *
+ * @component
+ * @example
+ * const App = () => {
+ *   return (
+ *     <Activity />
+ *    );
+ * };
+ */
 const Activity = () => {
   const { id } = useParams();
   const { activity, getActivity } = useContext(UserContext);
@@ -21,8 +32,6 @@ const Activity = () => {
   useEffect(() => {
     getActivity(id);
   }, [id, getActivity]);
-
-  let count = 0;
 
   const CustomTooltip = ({ active, payload }) => {
     if (!(active && payload && payload.length)) return null;
@@ -41,8 +50,7 @@ const Activity = () => {
     );
   };
 
-  const CustomXAxisTick = ({ x, y }) => {
-    const prevCount = count++;
+  const CustomXAxisTick = ({ x, y, payload }) => {
     return (
       <g transform={`translate(${x},${y})`}>
         <text
@@ -51,7 +59,7 @@ const Activity = () => {
           textAnchor="start"
           fill="#9b9eac"
         >
-          {`${(prevCount % activity.sessions?.length) + 1}`}
+          {payload.value}
         </text>
       </g>
     );
@@ -93,7 +101,7 @@ const Activity = () => {
         <BarChart
           width={835}
           height={207.5}
-          data={activity.sessions}
+          data={activity}
           barGap={8}
           margin={{
             top: 24,

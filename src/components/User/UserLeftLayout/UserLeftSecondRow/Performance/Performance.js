@@ -10,6 +10,17 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
+/**
+ * Component rendering the performance radar chart in the application.
+ *
+ * @component
+ * @example
+ * const App = () => {
+ *   return (
+ *     <Activity />
+ *    );
+ * };
+ */
 const Performance = () => {
   const { id } = useParams();
 
@@ -19,48 +30,15 @@ const Performance = () => {
     getPerformance(id);
   }, [id, getPerformance]);
 
-  const frenchNamesPerformance = {
-    cardio: 'Cardio',
-    intensity: 'Intensité',
-    speed: 'Vitesse',
-    strength: 'Force',
-    endurance: 'Endurance',
-    energy: 'Energie',
-  };
-
-  const titlePositions = {
-    Cardio: { x: -17, y: -2, rotation: 0 },
-    Intensité: { x: -25, y: -2, rotation: -60 },
-    Vitesse: { x: -24, y: 2, rotation: 60 },
-    Force: { x: -15, y: 2, rotation: 0 },
-    Endurance: { x: -27, y: 2, rotation: -60 },
-    Energie: { x: -18, y: -2, rotation: 60 },
-  };
-
-  let performanceData = [
-    {
-      kind: '',
-      value: 0,
-    },
-  ];
-
-  if (performance.data)
-    performanceData = performance.data
-      .sort((a, b) => (a.kind < b.kind ? -1 : 1))
-      .map(perf => {
-        return {
-          ...perf,
-          kind: frenchNamesPerformance[performance.kind[perf.kind]],
-        };
-      });
-
   const CustomAxisTick = ({ x, y, payload }) => {
-    const rotation = `rotate(${titlePositions[payload.value]?.rotation || 0})`;
+    const { position } = performance[payload.index];
+    const rotation = `rotate(${position.rotation})`;
+
     return (
       <g transform={`translate(${x},${y})`}>
         <text
-          x={titlePositions[payload.value]?.x || 0}
-          y={5 + titlePositions[payload.value]?.y || 0}
+          x={position.x}
+          y={5 + position.y}
           style={{ fontSize: 12, fontWeight: 500 }}
           textAnchor="start"
           fill="#ffffff"
@@ -75,9 +53,9 @@ const Performance = () => {
   return (
     <div className={styles.performance}>
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={performanceData}>
+        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={performance}>
           <PolarGrid stroke="#ffffff" />
-          <PolarAngleAxis dataKey="kind" tick={<CustomAxisTick />} />
+          <PolarAngleAxis dataKey="french" tick={<CustomAxisTick />} />
           <Radar
             name="Performance"
             dataKey="value"

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router';
-import Header from '../components/User/Header/Header';
+import UserHeader from '../components/User/UserHeader/UserHeader';
 import Activity from '../components/User/UserLeftLayout/Activity/Activity';
 import UserLeftSecondRow from '../components/User/UserLeftLayout/UserLeftSecondRow/UserLeftSecondRow';
 import Sessions from '../components/User/UserLeftLayout/UserLeftSecondRow/Sessions/Sessions';
@@ -12,6 +12,18 @@ import UserRightLayout from '../components/User/UserRightLayout/UserRightLayout'
 import InfoCard from '../components/User/UserRightLayout/InfoCard/InfoCard';
 import UserLayout from '../components/User/UserLayout/UserLayout';
 
+/**
+ * User page of the application, used by the router to create the content of an user's page.
+ *
+ * @component
+ * @example
+ * return (
+ *   <Routes>
+ *     <Route path="" element={<Navigate to="user/12" replace />} replace />
+ *     <Route path="user/:id" element={<User />} />
+ *   </Routes>
+ * );
+ */
 const User = () => {
   const { user, getUser } = useContext(UserContext);
   const { id } = useParams();
@@ -20,32 +32,23 @@ const User = () => {
     getUser(id);
   }, [id, getUser]);
 
-  const { userInfos, keyData } = user;
-  let displayKeyData = [{ info: '', cat: 'calorie' }];
-
-  if (keyData)
-    displayKeyData = Object.entries(keyData).map(([key, value]) => {
-      return {
-        info: value,
-        cat: key.slice(0, -5),
-      };
-    });
+  const { name, score, data } = user;
 
   return (
     <React.Fragment>
-      <Header firstName={userInfos?.firstName} />
+      <UserHeader name={name} />
       <UserLayout>
         <UserLeftLayout>
           <Activity />
           <UserLeftSecondRow>
             <Sessions />
             <Performance />
-            <Score score={user.todayScore || 0} />
+            <Score score={score} />
           </UserLeftSecondRow>
         </UserLeftLayout>
         <UserRightLayout>
-          {displayKeyData.map(({ info, cat }) => (
-            <InfoCard key={cat} cat={cat} info={info} />
+          {data.map(({ key, info, cat }) => (
+            <InfoCard key={key} info={info} cat={cat} />
           ))}
         </UserRightLayout>
       </UserLayout>

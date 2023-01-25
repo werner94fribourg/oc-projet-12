@@ -1,6 +1,17 @@
 import logo from './logo.svg';
 import styles from './Header.module.scss';
 
+/**
+ * Global Header of the application, containing the Navigation Bar.
+ *
+ * @component
+ * @example
+ * const App = () => {
+ *   return (
+ *     <Header />
+ *    );
+ * };
+ */
 const Header = () => {
   return (
     <header className={styles.header}>

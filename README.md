@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# Code Base Project 12 - React Frontend Developer Path
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+This project contains the base code of the User Page of SportSee, a sport coaching oriented startup. It was developed respective to this[figma design](https://www.figma.com/file/BMomGVZqLZb811mDMShpLu/UI-design-Sportify-FR?node-id=0%3A1) and those [user stories](https://www.notion.so/Tableau-de-bord-SportSee-6686aa4b5f44417881a4884c9af5669e).
 
-In the project directory, you can run:
+The project was developed with the [React](https://fr.reactjs.org/) library.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The [Node.js](https://nodejs.org/en/) environment should have been installed on your system.
+After you went through the installation, type the following instruction in the console :
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```sh
+node --version
+```
 
-### `npm test`
+A current version of node should be displayed.
+The same is true for this instruction, displaying the current version of the Node Package Management (npm) :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```sh
+npm --version
+```
 
-### `npm run build`
+## Start the project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the project repository
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```sh
+   git clone https://github.com/werner94fribourg/oc-projet-12.git
+   ```
 
-### `npm run eject`
+2. Clone the mock backend repository
+   ```sh
+   git clone https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard
+   ```
+3. Install the npm dependencies on the backend and on the frontend project
+   ```sh
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Execution
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Execute the backend project on your local environment : it will start it on [http://localhost:3000](http://localhost:3000)
+   ```sh
+   npm start
+   ```
+2. Execute the frontend project on your local environment
+   ```sh
+   npm start
+   ```
+3. Since the port 3000 is already occupied by the backend application, a message asking you to deploy the app on another port will be displayed. Click the "y" button on your keyboard to allow the deployment.
+4. Open [http://localhost:3001](http://localhost:3001) to view it in your browser. The page will reload when you make changes. You may also see any lint errors in the console.

@@ -4,6 +4,17 @@ import cycling from './cycling.svg';
 import musculation from './musculation.svg';
 import styles from './SideNav.module.scss';
 
+/**
+ * Side navigation bar of the application.
+ *
+ * @component
+ * @example
+ * const App = () => {
+ *   return (
+ *     <SideNav />
+ *    );
+ * };
+ */
 const SideNav = () => {
   return (
     <div className={styles.sidenav}>

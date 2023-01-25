@@ -1,6 +1,27 @@
+/**
+ * Component for rendering the score radial bar chart in the application.
+ * @module Score
+ */
 import styles from './Score.module.scss';
 import { RadialBarChart, RadialBar, ResponsiveContainer } from 'recharts';
+import PropTypes from 'prop-types';
 
+/**
+ * @typedef {object} Props
+ * @prop {number} score - the value of the score we want to display on the component
+ */
+
+/**
+ * Component for rendering the score radial bar chart in the application.
+ *
+ * @param {Props} props - the [props]{@link Props} passed to the React Component
+ * @component
+ * @example
+ * const score = 0.25;
+ * return (
+ *   <Score score={score} />
+ * )
+ */
 const Score = props => {
   const { score } = props;
   return (
@@ -34,6 +55,13 @@ const Score = props => {
       </div>
     </div>
   );
+};
+
+Score.propTypes = {
+  /**
+   * The value of the score we want to display on the component
+   */
+  score: PropTypes.number,
 };
 
 export default Score;
