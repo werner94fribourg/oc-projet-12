@@ -37,11 +37,11 @@ const Sessions = () => {
 
     const [
       {
-        payload: { session },
+        payload: { length },
       },
     ] = payload;
 
-    return <div className={styles.tooltip}>{session} min</div>;
+    return <div className={styles.tooltip}>{length} min</div>;
   };
 
   const calcOffset = posX => {
