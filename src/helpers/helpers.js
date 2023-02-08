@@ -14,6 +14,8 @@
 export const fetchAndTransformData = async url => {
   const response = await fetch(url, { mode: 'cors' });
 
+  if (!response.ok) throw new Error('Non existing user');
+
   const { data } = await response.json();
 
   return data;

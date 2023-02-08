@@ -9,6 +9,12 @@ import { USER_URL } from '../helpers/globals';
 import { fetchAndTransformData } from '../helpers/helpers';
 import PropTypes from 'prop-types';
 import formatter from '../formatter/UserFormatter';
+import {
+  MOCK_ACTIVITY,
+  MOCK_AVERAGE_SESSIONS,
+  MOCK_PERFORMANCE,
+  MOCK_USER,
+} from './mock-data';
 
 /**
  * Getter function, used to retrieve an element from the API from a specific user.
@@ -34,33 +40,10 @@ import formatter from '../formatter/UserFormatter';
  * @type {UserContext}
  */
 const defaultContext = {
-  user: {
-    name: '',
-    score: 0,
-    data: [
-      {
-        key: 'calorie',
-        info: 0,
-        cat: {
-          key: 'calorie',
-          name: 'Calories',
-          img: calories,
-          unit: 'kCal',
-        },
-      },
-    ],
-  },
-  activity: [{ day: 1, kilogram: 0, calories: 0 }],
-  averageSessions: [{ day: 1, length: 0 }],
-  performance: [
-    {
-      kind: 1,
-      english: 'cardio',
-      french: 'Cardio',
-      value: 80,
-      position: { x: 0, y: 0, rotation: 0 },
-    },
-  ],
+  user: formatter.formatUser(MOCK_USER),
+  activity: formatter.formatActivity(MOCK_ACTIVITY),
+  averageSessions: formatter.formatAverageSessions(MOCK_AVERAGE_SESSIONS),
+  performance: formatter.formatPerformance(MOCK_PERFORMANCE),
   getUser: id => {},
   getActivity: id => {},
   getAverageSessions: id => {},
@@ -91,42 +74,21 @@ export const UserContext = React.createContext(defaultContext);
  * );
  */
 const UserContextProvider = props => {
-  const [user, setUser] = useState({
-    name: '',
-    score: 0,
-    data: [
-      {
-        key: 'calorie',
-        info: 0,
-        cat: {
-          key: 'calorie',
-          name: 'Calories',
-          img: calories,
-          unit: 'kCal',
-        },
-      },
-    ],
-  });
-  const [activity, setActivity] = useState([
-    { day: 1, kilogram: 0, calories: 0 },
-  ]);
-  const [averageSessions, setAverageSessions] = useState([
-    { day: 1, length: 30 },
-  ]);
-  const [performance, setPerformance] = useState([
-    {
-      kind: 1,
-      english: 'cardio',
-      french: 'Cardio',
-      value: 80,
-      position: { x: 0, y: 0, rotation: 0 },
-    },
-  ]);
+  const [user, setUser] = useState(formatter.formatUser(MOCK_USER));
+  const [activity, setActivity] = useState(
+    formatter.formatActivity(MOCK_ACTIVITY)
+  );
+  const [averageSessions, setAverageSessions] = useState(
+    formatter.formatAverageSessions(MOCK_AVERAGE_SESSIONS)
+  );
+  const [performance, setPerformance] = useState(
+    formatter.formatPerformance(MOCK_PERFORMANCE)
+  );
 
   const getUser = useCallback(async id => {
     try {
       const userData = await fetchAndTransformData(USER_URL + id);
-
+      console.log(userData);
       const formatted = formatter.formatUser(userData);
 
       setUser(() => {
@@ -135,21 +97,12 @@ const UserContextProvider = props => {
         };
       });
     } catch (err) {
-      setUser({
-        name: '',
-        score: 0,
-        data: [
-          {
-            key: 'calorie',
-            info: 0,
-            cat: {
-              key: 'calorie',
-              name: 'Calories',
-              img: calories,
-              unit: 'kCal',
-            },
-          },
-        ],
+      const dummyUser = formatter.formatUser(MOCK_USER);
+      console.log(dummyUser);
+      setUser(() => {
+        return {
+          ...dummyUser,
+        };
       });
     }
   }, []);
@@ -167,7 +120,10 @@ const UserContextProvider = props => {
         return [...formatted];
       });
     } catch (err) {
-      setActivity([{ day: 1, kilogram: 0, calories: 0 }]);
+      const dummyActivity = formatter.formatActivity(MOCK_ACTIVITY);
+      setActivity(() => {
+        return [...dummyActivity];
+      });
     }
   }, []);
 
@@ -186,7 +142,12 @@ const UserContextProvider = props => {
         return [...formatted];
       });
     } catch (err) {
-      setAverageSessions([{ day: 1, length: 30 }]);
+      const dummyAvgSessions = formatter.formatAverageSessions(
+        MOCK_AVERAGE_SESSIONS
+      );
+      setAverageSessions(() => {
+        return [...dummyAvgSessions];
+      });
     }
   }, []);
 
@@ -203,15 +164,10 @@ const UserContextProvider = props => {
         return [...formatted];
       });
     } catch (err) {
-      setPerformance([
-        {
-          kind: 1,
-          english: 'cardio',
-          french: 'Cardio',
-          value: 80,
-          position: { x: 0, y: 0, rotation: 0 },
-        },
-      ]);
+      const dummyPerformance = formatter.formatPerformance(MOCK_PERFORMANCE);
+      setPerformance(() => {
+        return [...dummyPerformance];
+      });
     }
   }, []);
 
